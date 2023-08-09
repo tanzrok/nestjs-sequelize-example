@@ -7,6 +7,7 @@ import { encryptPassword } from '../../common/tools/password';
 import { ConfigService } from '@nestjs/config';
 import { SignUpDto } from './dto/signup.dto';
 import { UserValidationException } from '../users/exceptions/user-validation.exception';
+import { ValidationError } from 'sequelize';
 
 type TLogin = 'phone' | 'email';
 
@@ -46,7 +47,7 @@ export class AuthService {
       const newUser = await user.save();
       return this.createToken(newUser.id);
     } catch (error) {
-      if (error?.errors?.length) {
+      if (error instanceof ValidationError) {
         throw new UserValidationException(error.errors);
       }
     }

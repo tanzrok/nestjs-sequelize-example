@@ -1,8 +1,8 @@
 import { BaseListQuery } from '../../../common/query';
-import { filterGetUsersDto, QueryGetUsersDto } from '../dto/query-get-users.dto';
+import { FilterGetUsersDto, QueryGetUsersDto } from '../dto/query-get-users.dto';
 
 export class QueryGetUsersHandlers
-  extends BaseListQuery<filterGetUsersDto>
+  extends BaseListQuery<FilterGetUsersDto>
   implements QueryGetUsersDto
 {
   constructor(init: QueryGetUsersDto) {

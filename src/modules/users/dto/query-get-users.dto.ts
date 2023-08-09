@@ -2,7 +2,7 @@ import { IsOptional, IsString, ValidateNested, IsEmail } from 'class-validator';
 import { Expose, Type } from 'class-transformer';
 import { PaginationDto } from '../../../common/validation';
 
-export class filterGetUsersDto {
+export class FilterGetUsersDto {
   @IsString()
   @IsOptional()
   phone?: string;
@@ -19,9 +19,9 @@ export class filterGetUsersDto {
 export class QueryGetUsersDto {
   @IsOptional()
   @ValidateNested()
-  @Type(() => filterGetUsersDto)
+  @Type(() => FilterGetUsersDto)
   @Expose()
-  filters?: filterGetUsersDto;
+  filters?: FilterGetUsersDto;
 
   @IsOptional()
   @ValidateNested()

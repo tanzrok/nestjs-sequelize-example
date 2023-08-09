@@ -7,6 +7,7 @@ import { CreateUserHandler } from './handlers/create-user';
 import { UserNotFoundById } from './exceptions/user-not-found.exception';
 import { UserValidationException } from './exceptions/user-validation.exception';
 import { QueryGetUsersHandlers } from './handlers/query-get-users';
+import { ValidationError } from 'sequelize';
 
 @Injectable()
 export class UsersService {
@@ -41,7 +42,7 @@ export class UsersService {
       const updatedUser = await user.update(data);
       return updatedUser;
     } catch (error) {
-      if (error?.errors?.length) {
+      if (error instanceof ValidationError) {
         throw new UserValidationException(error.errors);
       }
     }
@@ -53,7 +54,7 @@ export class UsersService {
       const newUser = await user.save();
       return newUser;
     } catch (error) {
-      if (error?.errors?.length) {
+      if (error instanceof ValidationError) {
         throw new UserValidationException(error.errors);
       }
     }
