@@ -12,7 +12,7 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const configService = app.get(ConfigService);
+  const configService = app.get<ConfigService>(ConfigService);
   const port = configService.get<number>('app.port');
   const origin = configService.get<string>('app.cors');
   const nodeEnv = configService.get<string>('app.nodeEnv');
