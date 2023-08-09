@@ -24,14 +24,14 @@ export class AuthService {
     return this.jwtService.sign({ userId }, { secret: jwtSecret, expiresIn: '30m' });
   }
 
-  private async findByContact(contact: string, type: TLogin): Promise<User> {
-    return this.userModel.findOne({ where: { [type]: contact } });
+  private async findByField(contact: string, filed: TLogin): Promise<User | null> {
+    return this.userModel.findOne({ where: { [filed]: contact } });
   }
 
-  async signIn(login: string, password: string) {
-    let type: TLogin = 'phone';
-    if (login.includes('@')) type = 'email';
-    const user = await this.findByContact(login, type);
+  async signIn(login: string, password: string): Promise<string> {
+    let filed: TLogin = 'phone';
+    if (login.includes('@')) filed = 'email';
+    const user = await this.findByField(login, filed);
 
     if (!user || user.password !== encryptPassword(password)) {
       throw new BadRequestException("User doesn't exist or password is invalid");
@@ -40,7 +40,7 @@ export class AuthService {
     return this.createToken(user.id);
   }
 
-  async signUp(body: SignUpDto) {
+  async signUp(body: SignUpDto): Promise<string> {
     try {
       const { user } = new CreateUserHandler(body);
       const newUser = await user.save();
