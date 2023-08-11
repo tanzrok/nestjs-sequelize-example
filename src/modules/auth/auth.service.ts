@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../../models/user.model';
@@ -50,6 +50,7 @@ export class AuthService {
       if (error instanceof ValidationError) {
         throw new UserValidationException(error.errors);
       }
+      throw new InternalServerErrorException('Error while creating user');
     }
   }
 }
