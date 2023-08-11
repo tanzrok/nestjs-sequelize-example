@@ -37,7 +37,9 @@ export class UsersController {
   @ApiQuery({ name: 'filters[email]', required: false })
   @ApiQuery({ name: 'filters[firstName]', required: false })
   async getAll(@Query() query?: QueryGetUsersDto) {
-    const { users, count } = await this.usersService.findAll(new QueryGetUsersHandlers(query));
+    const { users, count } = await this.usersService.findAll(
+      new QueryGetUsersHandlers(query || {}),
+    );
     return { users: users.map((user) => userTransform(user)), count };
   }
 

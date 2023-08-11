@@ -39,6 +39,6 @@ async function bootstrap() {
   app.use(compression());
   app.use(helmet());
 
-  await app.listen(port);
+  await app.listen(Number(port));
 }
 bootstrap();

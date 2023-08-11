@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from '../../models/user.model';
 import { UpdateUserHandler } from './handlers/update-user';
@@ -45,6 +45,7 @@ export class UsersService {
       if (error instanceof ValidationError) {
         throw new UserValidationException(error.errors);
       }
+      throw new InternalServerErrorException('Error while updating user');
     }
   }
 
@@ -57,6 +58,7 @@ export class UsersService {
       if (error instanceof ValidationError) {
         throw new UserValidationException(error.errors);
       }
+      throw new InternalServerErrorException('Error while creating user');
     }
   }
 
